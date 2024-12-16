@@ -25,13 +25,9 @@ def get_position_after_walking(x, v, s):
             new_y = length + new_y
         elif new_y >= length:
             new_y = new_y - length
-
-        x[0] = new_x
-        x[1] = new_y
-
         s -= 1
 
-    return x
+    return [new_x, new_y]
 
 
 half_length = length // 2 
@@ -41,7 +37,6 @@ Q2 = 0
 Q3 = 0
 Q4 = 0
 
-field = [['.' for i in range(width)] for j in range(length)]
 
 
 for i in range(len(data)):
@@ -49,12 +44,9 @@ for i in range(len(data)):
     x = [int(j) for j in tmp[0].split('=')[1].split(',')]
     v = [int(j) for j in tmp[1].split('=')[1].split(',')]
     new_x = get_position_after_walking(x, v, seconds)
-    if field[new_x[1]][new_x[0]] == '.':
-        field[new_x[1]][new_x[0]] = 1
-    else: 
-        field[new_x[1]][new_x[0]] += 1
 
-
+    
+    
     if new_x[0] < half_width:
         if new_x[1] < half_length: 
             Q1 += 1
@@ -71,3 +63,70 @@ print('Q1, Q2, Q3, Q4', Q1, Q2, Q3, Q4)
 
 #for i in field:
 #    print(''.join(str(x) for x in i))
+
+
+no_christmas_tree = True
+seconds = 0
+
+
+x_pos = []
+v = []
+for i in range(len(data)):
+    tmp = data[i].split()
+    x_pos.append([int(j) for j in tmp[0].split('=')[1].split(',')])
+    v.append([int(j) for j in tmp[1].split('=')[1].split(',')])
+
+field = [['.' for i in range(width)] for j in range(length)]
+for i in range(len(x_pos)):
+    print(x_pos[i])
+    if field[x_pos[i][1]][x_pos[i][0]] == '.':
+        field[x_pos[i][1]][x_pos[i][0]] = 1
+    else:
+        field[x_pos[i][1]][x_pos[i][0]] += 1
+
+for i in field:
+    print(''.join(str(x) for x in i))
+
+while(no_christmas_tree):
+    for i in range(len(x_pos)):
+        new_x = get_position_after_walking(x_pos[i], v[i], 1)
+
+        if field[new_x[1]][new_x[0]] == '.':
+            field[new_x[1]][new_x[0]] = 1
+        else:
+            field[new_x[1]][new_x[0]] += 1
+        
+        if field[x_pos[i][1]][x_pos[i][0]] == 1:
+            field[x_pos[i][1]][x_pos[i][0]] = '.'
+        else:
+            field[x_pos[i][1]][x_pos[i][0]] -= 1
+        
+        x_pos[i][0] = new_x[0]
+        x_pos[i][1] = new_x[1]
+
+    for i in range(len(field)):
+        counter = 0
+        for j in range(len(field[0])):
+            if field[i][j] != '.':
+                counter += 1
+            elif field[i][j] == '.':
+                counter = 0
+
+            if counter > 7:
+                print('seconds', seconds)
+                no_christmas_tree = False
+                break
+    
+    if seconds % 100 == 0:
+        print(seconds, counter)
+    
+    seconds += 1
+
+for i in field:
+    print(''.join(str(x) for x in i))
+
+for i in field:
+    print(''.join(str(x) for x in i))
+
+print('Part two: ', seconds)
+
