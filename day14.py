@@ -8,8 +8,6 @@ with open(file) as f:
 length = 103
 width = 101
 
-#length = 7
-#width = 11
 
 def get_position_after_walking(x, v, s):
 
@@ -36,9 +34,6 @@ Q1 = 0
 Q2 = 0
 Q3 = 0
 Q4 = 0
-
-
-
 for i in range(len(data)):
     tmp = data[i].split()
     x = [int(j) for j in tmp[0].split('=')[1].split(',')]
@@ -61,14 +56,10 @@ for i in range(len(data)):
 print('Part one: ', Q1 * Q2 * Q3 * Q4)
 print('Q1, Q2, Q3, Q4', Q1, Q2, Q3, Q4)
 
-#for i in field:
-#    print(''.join(str(x) for x in i))
 
 
 no_christmas_tree = True
 seconds = 0
-
-
 x_pos = []
 v = []
 for i in range(len(data)):
@@ -113,7 +104,6 @@ while(no_christmas_tree):
                 counter = 0
 
             if counter > 7:
-                print('seconds', seconds)
                 no_christmas_tree = False
                 break
     
@@ -122,8 +112,6 @@ while(no_christmas_tree):
     
     seconds += 1
 
-for i in field:
-    print(''.join(str(x) for x in i))
 
 for i in field:
     print(''.join(str(x) for x in i))
